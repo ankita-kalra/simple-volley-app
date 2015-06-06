@@ -4,6 +4,7 @@ package com.example.ankita.volleytrial;
 
 import com.example.ankita.volleytrial.R;
 import com.example.ankita.volleytrial.AppController;
+import com.example.ankita.volleytrial.AuthJSONObjectRequest;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -34,7 +35,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 public class MainActivity extends ActionBarActivity {
 
     //json object response url
-    private String urlJsonObj = "http://api.androidhive.info/volley/person_object.json";
+    //private String urlJsonObj = "http://api.androidhive.info/volley/person_object.json";
+    private String urlJsonObj = "http://systerspcweb.herokuapp.com/api/activity/1/?format=json";
     //json array response url
     private String urlJsonArray = "http://api.androidhive.info/volley/person_array.json";
 
@@ -108,7 +110,7 @@ public class MainActivity extends ActionBarActivity {
         showpDialog(); //progress dialog shows loading...while the data is being fetched
 
         //making a JSON Object  Request below
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET, urlJsonObj, null
+        AuthJSONObjectRequest jsonObjReq = new AuthJSONObjectRequest(Method.GET, urlJsonObj, null
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -117,17 +119,17 @@ public class MainActivity extends ActionBarActivity {
                 try {
                     Log.i(TAG,"INSIDE JSON RESPONSE");
                     //parsing json object response
-                    String name = response.getString("name");
-                    String email = response.getString("email");
-                    JSONObject phone = response.getJSONObject("phone");
-                    String home = phone.getString("home");
-                    String mobile = phone.getString("mobile");
+                    String name = response.getString("activity_title");
+                    String desc = response.getString("activity_desc");
+                    //JSONObject phone = response.getJSONObject("phone");
+                    //String home = phone.getString("home");
+                    //String mobile = phone.getString("mobile");
 
                     jsonResponse = "";
-                    jsonResponse += "Name: " + name + "\n\n";
-                    jsonResponse += "Email: " + name + "\n\n";
-                    jsonResponse += "Home: " + name + "\n\n";
-                    jsonResponse += "Mobile: " + name + "\n\n";
+                    jsonResponse += "Activity Name: " + name + "\n\n";
+                    jsonResponse += "Desc: " + desc + "\n\n";
+                    //jsonResponse += "Home: " + name + "\n\n";
+                    //jsonResponse += "Mobile: " + name + "\n\n";
 
                     txtResponse.setText(jsonResponse);
                 } catch (JSONException e) {
